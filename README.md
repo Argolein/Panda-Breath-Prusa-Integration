@@ -7,24 +7,28 @@ Use a Raspberry Pi as a small Moonraker-style bridge so a BigTreeTech Panda Brea
 Clone the repo on the Pi and run:
 
 ```bash
+git clone https://github.com/Argolein/Panda-Breath-Prusa-Integration.git
+cd Panda-Breath-Prusa-Integration
 chmod +x install.sh
 ./install.sh
 ```
 
 The installer asks for:
 
-- the install path
-- the Linux user that should run the service
 - the PrusaLink URL
 - the auth method
 - your PrusaLink login or API key
 
-At the end it writes `config.json`, installs a `systemd` service, and starts it.
+At the end it writes `config.json`, installs a `systemd` service, and can start it right away.
+
+It installs into the cloned repo directory and runs the service as the current Linux user.
 
 Then point the Panda Breath to:
 
 - `Printer IP`: your Pi IP
 - `Port`: `7126`
+
+The bridge itself always listens on `0.0.0.0:7126`. You do not need to set that manually in the installer.
 
 ## What it does
 
@@ -75,6 +79,8 @@ Watch logs:
 ```bash
 sudo journalctl -u panda-prusa-bridge.service -f
 ```
+
+Re-run the installer later if you want to change the target printer or credentials.
 
 ## Notes
 
