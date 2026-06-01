@@ -165,7 +165,7 @@ INSTALL_DIR="$DEFAULT_INSTALL_DIR"
 SERVICE_USER="$CURRENT_USER"
 LISTEN_HOST="$BRIDGE_LISTEN_HOST"
 LISTEN_PORT="$BRIDGE_LISTEN_PORT"
-PRUSA_HOST="$(prompt "PrusaLink URL (example: http://192.168.178.102)" "$DEFAULT_PRUSA_URL")"
+PRUSA_HOST="$(prompt "PrusaLink URL (example: http://PRUSA-IP)" "$DEFAULT_PRUSA_URL")"
 PRUSA_AUTH_TYPE="$(prompt "PrusaLink auth type (digest/api_key/none)" "digest")"
 
 PRUSA_USERNAME=""
