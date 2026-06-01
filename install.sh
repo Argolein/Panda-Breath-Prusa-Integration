@@ -13,6 +13,7 @@ CACHE_TTL="2.0"
 FALLBACK_TARGET="0.0"
 FALLBACK_CURRENT="0.0"
 LOG_LEVEL="INFO"
+PRUSA_AUTH_TYPE="digest"
 
 say() {
   printf '%s\n' "$*"
@@ -96,7 +97,6 @@ write_config() {
   export INSTALL_PRUSA_AUTH_TYPE="$PRUSA_AUTH_TYPE"
   export INSTALL_PRUSA_USERNAME="$PRUSA_USERNAME"
   export INSTALL_PRUSA_PASSWORD="$PRUSA_PASSWORD"
-  export INSTALL_PRUSA_API_KEY="$PRUSA_API_KEY"
   export INSTALL_REQUEST_TIMEOUT="$REQUEST_TIMEOUT"
   export INSTALL_CACHE_TTL="$CACHE_TTL"
   export INSTALL_FALLBACK_TARGET="$FALLBACK_TARGET"
@@ -115,7 +115,7 @@ config = {
     "prusa_auth_type": os.environ["INSTALL_PRUSA_AUTH_TYPE"],
     "prusa_username": os.environ["INSTALL_PRUSA_USERNAME"],
     "prusa_password": os.environ["INSTALL_PRUSA_PASSWORD"],
-    "prusa_api_key": os.environ["INSTALL_PRUSA_API_KEY"],
+    "prusa_api_key": "",
     "request_timeout_seconds": float(os.environ["INSTALL_REQUEST_TIMEOUT"]),
     "cache_ttl_seconds": float(os.environ["INSTALL_CACHE_TTL"]),
     "fallback_bed_target": float(os.environ["INSTALL_FALLBACK_TARGET"]),
@@ -166,26 +166,8 @@ SERVICE_USER="$CURRENT_USER"
 LISTEN_HOST="$BRIDGE_LISTEN_HOST"
 LISTEN_PORT="$BRIDGE_LISTEN_PORT"
 PRUSA_HOST="$(prompt "PrusaLink URL (example: http://PRUSA-IP)" "$DEFAULT_PRUSA_URL")"
-PRUSA_AUTH_TYPE="$(prompt "PrusaLink auth type (digest/api_key/none)" "digest")"
-
-PRUSA_USERNAME=""
-PRUSA_PASSWORD=""
-PRUSA_API_KEY=""
-
-case "$PRUSA_AUTH_TYPE" in
-  digest)
-    PRUSA_USERNAME="$(prompt "PrusaLink username" "")"
-    PRUSA_PASSWORD="$(prompt_secret "PrusaLink password")"
-    ;;
-  api_key)
-    PRUSA_API_KEY="$(prompt_secret "PrusaLink API key")"
-    ;;
-  none)
-    ;;
-  *)
-    fail "Unsupported auth type: $PRUSA_AUTH_TYPE"
-    ;;
-esac
+PRUSA_USERNAME="$(prompt "PrusaLink username" "")"
+PRUSA_PASSWORD="$(prompt_secret "PrusaLink password")"
 
 ENABLE_SERVICE="$(prompt "Enable and start the service now? (yes/no)" "yes")"
 SERVICE_PATH="/etc/systemd/system/${DEFAULT_SERVICE_NAME}.service"

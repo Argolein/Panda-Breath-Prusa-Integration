@@ -16,8 +16,8 @@ chmod +x install.sh
 The installer asks for:
 
 - the PrusaLink URL
-- the auth method
-- your PrusaLink login or API key
+- your PrusaLink username
+- your PrusaLink password
 
 At the end it writes `config.json`, installs a `systemd` service, and can start it right away.
 
